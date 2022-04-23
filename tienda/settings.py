@@ -24,8 +24,7 @@ SECRET_KEY = 'django-insecure-2vl)6$y3x8hklqe4((z$t(omg8txxl80fp2-&o^&kzmb-ms8ne
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,7 +41,8 @@ INSTALLED_APPS = [
     'users',
     'phonenumber_field',
     'productos',
-    'frotend'
+    'frotend',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -72,7 +73,10 @@ TEMPLATES = [
         },
     },
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000'
+]
 WSGI_APPLICATION = 'tienda.wsgi.application'
 
 
@@ -140,8 +144,11 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissions',
     )
 }
+CORS_ORIGIN_ALLOW_ALL = False
 
-
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
 
 
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')

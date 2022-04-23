@@ -5,7 +5,7 @@ from .models import *
 from django.contrib.auth.models import Group
 
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import UserChangeForm
+
 
 class TermInlineAdmin(admin.TabularInline):
     model = User.Pedidos.through
@@ -23,5 +23,5 @@ class MyUserAdmin(UserAdmin):
 
 admin.site.register(Producto)
 admin.site.unregister(Group)
-admin.site.register(Count)
+
 admin.site.register(User, MyUserAdmin)

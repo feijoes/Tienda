@@ -1,19 +1,13 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import {RegisterApp} from "./Register";
 
-
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
+function App() {
+  return (
       <div>
-        <h1>test</h1>
+        <RegisterApp />
       </div>
     );
-  }
 }
 
 const appDiv = document.getElementById("app");
