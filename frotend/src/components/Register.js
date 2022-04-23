@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from "react-router-dom";
 
 
 
 export function RegisterApp() {
-
+    const navigate = useNavigate();
     const [inputs, setInputs] = useState({"Entidad":"Persona"});
 
     const handleChange = (event) => {
@@ -12,27 +12,27 @@ export function RegisterApp() {
         const name = event.target.name;
         const value = event.target.value;
         setInputs(values => ({...values, [name]: value}))
-        
     }
-    function handleSubmit(){
-        
+    const handleSubmit = () => {
+    
         let csrftoken = document.cookie;
         csrftoken = csrftoken.split('=')[1].split(';')[0];
-
-        console.log(csrftoken)
         fetch('/api/user/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken
-
+    
             },
             body: JSON.stringify(inputs)
         })
-    .then(res => console.log(res))
-    .catch(error => console.log(error))
-        }
+    .then(res => {if (res.ok == true) { 
+        navigate("/");
+        
+    } else {console.log(res)};
+    })}
+    
 
     return (<div>
                   <div className="formularioRe" id="sesion">

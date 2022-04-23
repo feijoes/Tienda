@@ -1,4 +1,3 @@
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,7 +13,6 @@ class UserView(generics.CreateAPIView,generics.ListAPIView):
     serializer_class = UserSerializer
    
     permission_classes = [permissions.AllowAny]
-    
     
 
 

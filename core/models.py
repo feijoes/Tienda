@@ -20,10 +20,10 @@ class User(AbstractUser):
         ('Persona', 'Persona'),
         ('Empresa', 'Empresa'),
     ]
-    Entidad = models.CharField(max_length=7,choices=entidad,default='Persona',null=True,blank=True)
-    DNI = models.IntegerField(null=True,blank=True)
-    Telefono =  PhoneNumberField(null=True, blank=True, unique=True)
-    Direccion =  models.CharField(max_length=50,null=True,blank=True) 
+    Entidad = models.CharField(max_length=7,choices=entidad,default='Persona')
+    DNI = models.IntegerField()
+    Telefono =  PhoneNumberField( unique=True)
+    Direccion =  models.CharField(max_length=50)
     Pedidos = models.ManyToManyField(Producto, related_name='pedidos',through="Count")
     Pedidos_no_entregados = models.ManyToManyField(Producto,related_name='pedidos_ya_entregados') 
     

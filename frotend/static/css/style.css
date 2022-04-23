@@ -332,7 +332,6 @@ li {
   background:black;
   left:0;
   font-size:25px;
-  font-feature-settings:
   padding:5px;
   position:fixed;
   border:none;
@@ -340,6 +339,10 @@ li {
 }
 .carousel {
   position: relative;
+}
+.IMG{
+  border:1px solid white;
+  width:99px;height:90px;
 }
 
 .carousel.pointer-event {
