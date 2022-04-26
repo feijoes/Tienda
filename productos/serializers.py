@@ -16,3 +16,6 @@ class ProductosSerializer(serializers.ModelSerializer):
         photo_url = obj.fingerprint.url
         return request.build_absolute_uri(photo_url)
     
+    
+
+

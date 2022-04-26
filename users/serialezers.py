@@ -1,12 +1,10 @@
-
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-
 class UserSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = get_user_model()
-        fields = ['username','password','Entidad','DNI','Telefono','Direccion','Pedidos']
+        fields = ['username','email','password','Entidad','DNI','Telefono','Direccion','Pedidos']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -24,7 +22,6 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class AddProductsToUser(serializers.Serializer):
-    
     productos = serializers.DictField(child=serializers.CharField())
     
     

@@ -15,13 +15,12 @@ class UserView(generics.CreateAPIView,generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     
 
-
+    
 class UserDetailApiView(APIView):
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def get_object(self, username):
-
         try:
             return get_user_model().objects.get(username=username)
         except get_user_model().DoesNotExist:
@@ -40,26 +39,6 @@ class UserDetailApiView(APIView):
 
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    # 4. Update
-    def put(self, request, username, *args, **kwargs):
-
-        user = self.get_object(username)
-        if not user:
-            return Response(
-                {"res": "user does not exists"}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        data = {
-            'task': request.data.get('task'), 
-            'completed': request.data.get('completed'), 
-            'user': request.data.get
-        }
-        serializer = UserSerializer(instance = user, data=data, partial = True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def post(self,request,username):
         

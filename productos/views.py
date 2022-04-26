@@ -1,3 +1,4 @@
+from webbrowser import get
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import *
@@ -13,6 +14,12 @@ class ProductosView(APIView):
         queryset = Producto.objects.all()
         serializer = ProductosSerializer(queryset, context={"request": request}, many=True)
         return Response(serializer.data) 
-
+    
+class ProductoAddCart(APIView):
+    
+    permission_classes = [permissions.AllowAny]
+    
+    def post(self,request):
+        pass
 
 

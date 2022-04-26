@@ -74,6 +74,11 @@
   width:99px;
   height:90px;
 }
+.test {
+
+  margin-top: 35px;
+
+}
 .card-bordo-e {
   background:brown;
   border:1px solid white;
@@ -285,7 +290,7 @@ li {
   background:black;
   left:0;
   font-size:25px;
-  font-feature-settings:
+
   padding:5px;
   position:fixed;
   border:none;

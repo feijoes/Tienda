@@ -6,25 +6,7 @@ document.onreadystatechange = function iniciar() {
   },3000);
   }
   
-  function sesion() {
-      document.getElementById("sesion").style.display = "block";
-      document.getElementById("main").style.display = "none";
-      document.getElementById("sectioncar").style.display = "none";
-      document.getElementById("myCarousel").style.display = "none";
-  }
-  function vercarro() {
-      document.getElementById("main").style.display = "none";
-      document.getElementById("sectioncar").style.display = "block";
-      document.getElementById("header").style.display = "none";
-      document.getElementById("myCarousel").style.display = "none";
-  }
-  function vertienda() {
-    document.getElementById("main").style.display = "block";
-    document.getElementById("sectioncar").style.display = "none";
-    document.getElementById("header").style.display = "block";
-    document.getElementById("myCarousel").style.display = "block";
-}
- (function (global, factory) {
+  (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@popperjs/core')) :
     typeof define === 'function' && define.amd ? define(['@popperjs/core'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.bootstrap = factory(global.Popper));
@@ -1410,4 +1392,4 @@ document.onreadystatechange = function iniciar() {
   
     return index_umd;
   
-  })));
+  })))

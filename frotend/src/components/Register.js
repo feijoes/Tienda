@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-
+function show_alert(data) {
+    let a = ''
+    let dict = {'username': 'Nombre','DNI': "DNI","Telefono" : 'Telefono' , "password" : "Contraseña" , "Direccion" : "Direccion","email": 'Email'}
+    data.forEach(element => {
+        a += dict[element]
+        a += '\n'
+    });
+    alert('Los campos:\n' + a + 'Son invalidos, porfavor intentalo otra vez.')
+    
+}
 
 export function RegisterApp() {
     const navigate = useNavigate();
@@ -30,8 +39,12 @@ export function RegisterApp() {
     .then(res => {if (res.ok == true) { 
         navigate("/");
         
-    } else {console.log(res)};
-    })}
+    } else {res.json().then(data => show_alert(Object.keys(data)))
+    
+    
+    };}
+    )
+}
     
 
     return (<div>
@@ -41,6 +54,8 @@ export function RegisterApp() {
                               <input type="text" name="username" value={inputs.username || ""} onChange={handleChange}/><br />
                           <label >DNI:</label><br />
                               <input type="text" name="DNI" value={inputs.DNI || ""} onChange={handleChange}/><br />
+                            <label >Email:</label><br />
+                              <input type="text" name="email" value={inputs.email || ""} onChange={handleChange}/><br />
                           <label className="col-sm-2 control-label" >Entidad</label><br />
                               <select className="form-control" id="slcNacionalidad" name="Entidad" value={inputs.Entidad} onChange={handleChange}>
                                   <option value="Persona">Persona</option>
@@ -55,6 +70,7 @@ export function RegisterApp() {
                              <button type='button' onClick={handleSubmit}>Entrar</button><br />
                           <a href="" >Ya tengo cuenta Iniciar Sesion</a>
                       </form>
+                      
                       <script src="{% static 'js/registro.js' %}"></script>
                   </div>
               </div>

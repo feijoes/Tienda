@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'productos',
     'frotend',
-    'corsheaders'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -144,12 +144,12 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissions',
     )
 }
+
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
 )
-
 
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
