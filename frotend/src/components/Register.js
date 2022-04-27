@@ -50,6 +50,7 @@ export function RegisterApp() {
     return (<div>
                   <div className="formularioRe" id="sesion">
                       <form className="form1" >
+                      <label >Formulario</label><br />
                           <label >Nombre:</label><br />
                               <input type="text" name="username" value={inputs.username || ""} onChange={handleChange}/><br />
                           <label >DNI:</label><br />

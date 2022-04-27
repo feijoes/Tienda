@@ -1,41 +1,22 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {Productos} from './producto'
+import {Productos} from './Producto'
+import {Carrito} from "./Carrito"
 export function HomePage() {
     const [data, setData] = useState(null);
-
+    const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`/api/productos/`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
-        }
-        return response.json();
-      })
-      .then((actualData) => {
-        setData(actualData);
-      })
+      .then((response) => response.json())
+      .then((actualData) => setData(actualData)).finally(() => {
+        setLoading(false);
+      });
       
   }, []);
 
-  const a = () => {fetch('api/productos/<st:username>', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      firstParam: 'yourValue',
-      secondParam: 'yourOtherValue',
-    })
-  })}
   
   
-    
-    
      return ( 
         <div> 
             <div className="content">
@@ -46,7 +27,6 @@ export function HomePage() {
             <header id="header" > 
                 <img className="logo" src="media/images/logito.svg" />
                 <a href='carrito'> <img className="user" src="media/images/carrodecompra.svg"/></a>
-                <a href='login'> <img className="user" src="media/images/user.svg" /> </a>
             </header> 
             
             <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
@@ -91,12 +71,17 @@ export function HomePage() {
                 </div>
                 
         <main className="container mt-5" id="main">
-            <div className="containeredwin row text-center">
-            {data &&data.map(({nombre, costo , imagen}) => (
-                <Productos key={data.id}nombre={nombre} costo={costo} imagen={imagen} />
+            <div className="containeredwin row text-center block">
+            {data ? 
+            data.map((product) => (
+                <Productos key={product.id} product={product} onAdd={onAdd} />
             
-          ))}
+          ))
+            else {
+              <p>Data is loading...</p>;
+            }}
             </div>
         </main>
+       
         
         </div>); }
