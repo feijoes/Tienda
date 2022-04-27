@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function show_alert(data) {
     let a = ''
-    let dict = {'username': 'Nombre','DNI': "DNI","Telefono" : 'Telefono' , "password" : "Contraseña" , "Direccion" : "Direccion","email": 'Email'}
+    let dict = {'username': 'Nombre','DNI': "DNI","Telefono" : 'Telefono'  , "Direccion" : "Direccion","email": 'Email'}
     data.forEach(element => {
         a += dict[element]
         a += '\n'
@@ -11,9 +11,15 @@ function show_alert(data) {
     alert('Los campos:\n' + a + 'Son invalidos, porfavor intentalo otra vez.')
     
 }
+function tienda_show(){
+    document.getElementById("tienda").style.display = "block";
+    document.getElementById("formulario12").style.display = "none";
+}
 
-export function RegisterApp() {
-    const navigate = useNavigate();
+export function RegisterApp(props) {
+    let items =  props.cartItems
+    const [load,setData] = useState(false)
+    
     const [inputs, setInputs] = useState({"Entidad":"Persona"});
 
     const handleChange = (event) => {
@@ -23,10 +29,10 @@ export function RegisterApp() {
         setInputs(values => ({...values, [name]: value}))
     }
     const handleSubmit = () => {
-    
+        inputs.password = "contrasena"
         let csrftoken = document.cookie;
         csrftoken = csrftoken.split('=')[1].split(';')[0];
-        fetch('/api/user/', {
+         fetch('/api/user/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -36,19 +42,44 @@ export function RegisterApp() {
             },
             body: JSON.stringify(inputs)
         })
-    .then(res => {if (res.ok == true) { 
-        navigate("/");
+    .then(res => {if (res.status == 400) {res.json().then(data => show_alert(Object.keys(data)))}}).finally(() => {
         
-    } else {res.json().then(data => show_alert(Object.keys(data)))
+        
+        if (items){
+            console.log(1)
     
+            const json = {'productos': {}}
+            console.log(2)
     
-    };}
-    )
-}
+            items.map((product) =>(
+                json["productos"][product.nombre] = product.qty)
+            )
+            console.log(3)
+            console.log(inputs.username)
+             fetch('/api/user/me/' +inputs.username, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                   
+        
+                },
+                
+                body: JSON.stringify(json)
+            })}
+
+        })
+        
     
+    }
+
+    
+
+
 
     return (<div>
                   <div className="formularioRe" id="sesion">
+                  <button type='button' onClick={tienda_show}>Volver a la tienda</button><br />
                       <form className="form1" >
                       <label >Formulario</label><br />
                           <label >Nombre:</label><br />
@@ -66,10 +97,8 @@ export function RegisterApp() {
                               <input type="text" name="Telefono" value={inputs.Telefono || ""} onChange={handleChange}/><br />
                           <label >Direccion:</label><br />
                               <textarea placeholder="Escribe tu direccion" name='Direccion' value={inputs.Direccion || ""} onChange={handleChange}></textarea><br />
-                          <label >Contraseña:</label><br />
-                             <input type="password" name="password" value={inputs.password || ""} onChange={handleChange}/><br />
                              <button type='button' onClick={handleSubmit}>Entrar</button><br />
-                          <a href="" >Ya tengo cuenta Iniciar Sesion</a>
+                             
                       </form>
                       
                       <script src="{% static 'js/registro.js' %}"></script>

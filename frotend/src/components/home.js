@@ -2,9 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 import {Productos} from './Producto'
 import {Carrito} from "./Carrito"
+import { RegisterApp } from "./Register";
+import Header from "./Header";
 export function HomePage() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     fetch(`/api/productos/`)
@@ -15,19 +18,48 @@ export function HomePage() {
       
   }, []);
 
-  
+
+  const onAdd = (product) => {
+    const exist = cartItems.find((x) => x.id === product.id);
+    if (exist) {
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
+        )
+      );
+    } else {
+      setCartItems([...cartItems, { ...product, qty: 1 }]);
+    }
+  };
+  const onRemove = (product) => {
+    const exist = cartItems.find((x) => x.id === product.id);
+    if (exist.qty === 1) {
+      setCartItems(cartItems.filter((x) => x.id !== product.id));
+    } else {
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
+        )
+      );
+    }
+  };
+
+    if (loading){
+      return <p>loading</p>
+    }
+    
   
      return ( 
-        <div> 
+       <div>
+        <div id="tienda"> 
             <div className="content">
                 <div className="load" id="load">
                     <img className="img" src="media/images/logito.svg"/>
                 </div> 
             </div> 
-            <header id="header" > 
-                <img className="logo" src="media/images/logito.svg" />
-                <a href='carrito'> <img className="user" src="media/images/carrodecompra.svg"/></a>
-            </header> 
+           
+              <Header countCartItems={cartItems.length}></Header>
+            
             
             <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
                  <div className="carousel-indicators">
@@ -72,16 +104,18 @@ export function HomePage() {
                 
         <main className="container mt-5" id="main">
             <div className="containeredwin row text-center block">
-            {data ? 
-            data.map((product) => (
-                <Productos key={product.id} product={product} onAdd={onAdd} />
-            
-          ))
-            else {
-              <p>Data is loading...</p>;
-            }}
+            {data.map((product) => (
+                <Productos key={product.id} product={product} onAdd={onAdd} />))
+            } 
             </div>
         </main>
-       
+        <Carrito cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}/>
         
+        </div>
+        <div id="formulario12" >
+          <RegisterApp cartItems={cartItems}/>
+        </div>
         </div>); }
+  
