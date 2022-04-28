@@ -46,7 +46,7 @@ export function RegisterApp(props) {
         
         
             const json = {'productos': {}}
-            console.log(2)
+            
     
             items.map((product) =>(
                 json["productos"][product.nombre] = product.qty)
@@ -64,6 +64,7 @@ export function RegisterApp(props) {
                 
                 body: JSON.stringify(json)
             })
+            alert('Pedido hecho, pronto entraremos en contacto contigo,podes cerrar la pagina ya')
             
       })
         
@@ -98,7 +99,7 @@ export function RegisterApp(props) {
                               <input type="text" name="Telefono" value={inputs.Telefono || ""} onChange={handleChange}/><br />
                           <label >Direccion:</label><br />
                               <textarea placeholder="Escribe tu direccion" name='Direccion' value={inputs.Direccion || ""} onChange={handleChange}></textarea><br />
-                             <button type='button' onClick={handleSubmit}>Entrar</button><br />
+                             <button type='button' onClick={handleSubmit}>Confirmar pedido</button><br />
                              
                       </form>
                       
