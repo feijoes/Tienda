@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 function show_alert(data) {
     let a = ''
@@ -28,7 +28,7 @@ export function RegisterApp(props) {
         const value = event.target.value;
         setInputs(values => ({...values, [name]: value}))
     }
-    const handleSubmit = () => {
+    const handleSubmit =  () => {
         inputs.password = "contrasena"
         let csrftoken = document.cookie;
         csrftoken = csrftoken.split('=')[1].split(';')[0];
@@ -45,35 +45,36 @@ export function RegisterApp(props) {
     .then(res => {if (res.status == 400) {res.json().then(data => show_alert(Object.keys(data)))}}).finally(() => {
         
         
-        if (items){
-            console.log(1)
-    
             const json = {'productos': {}}
             console.log(2)
     
             items.map((product) =>(
                 json["productos"][product.nombre] = product.qty)
             )
-            console.log(3)
-            console.log(inputs.username)
-             fetch('/api/user/me/' +inputs.username, {
+            let csrftoken = document.cookie;
+        csrftoken = csrftoken.split('=')[1].split(';')[0];
+            fetch('/api/user/me/' +inputs.username + '/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                   
+                    'X-CSRFToken': csrftoken
         
                 },
                 
                 body: JSON.stringify(json)
-            })}
-
-        })
+            })
+            
+      })
         
-    
     }
-
     
+    
+   
+        
+        
+
+        
 
 
 
